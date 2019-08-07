@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="small-container">
     <h1>Employees</h1>
-    <employee-form @add:employee="addEmployee"/>
+    <employee-form @add:employee="addEmployee" />
     <employee-table :employees="employees" />
   </div>
 </template>
@@ -19,12 +19,12 @@ export default {
     return {
       employees: [
         {
-          id: 1,
+          id: 0,
           name: "User Name",
           email: "user@user.com"
         },
         {
-          id: 2,
+          id: 1,
           name: "Admin User",
           email: "admin@user.com"
         }
@@ -32,9 +32,12 @@ export default {
     };
   },
   methods: {
-      addEmployee( test){
-        console.log(test)
-      }
+    addEmployee(employee) {
+      const id = this.employees.length > 0 ? this.employees.length : 0;
+      console.log(employee.name);
+      employee = { ...employee, id };
+      this.employees = [...this.employees, employee];
+    }
   }
 };
 </script>
