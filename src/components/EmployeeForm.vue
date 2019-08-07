@@ -23,7 +23,10 @@ export default {
   },
   methods: {
     handleSubmit () {
-      console.log("testing submit");
+        this.$emit("add:employee", {
+          employee: this.employee,
+          id: "test"
+        })
     }
   }
 };

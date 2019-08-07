@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="small-container">
     <h1>Employees</h1>
-    <employee-form></employee-form>
+    <employee-form @add:employee="addEmployee"/>
     <employee-table :employees="employees" />
   </div>
 </template>
@@ -30,6 +30,11 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+      addEmployee( test){
+        console.log(test)
+      }
   }
 };
 </script>
