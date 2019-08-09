@@ -2,7 +2,10 @@
   <div id="employee-table">
     <table>
       <tbody>
-        <tr v-for="employee in employees" :key="employee.id">
+        <tr
+          v-for="employee in employees"
+          :key="employee.id"
+        >
           <td>{{ employee.name }}</td>
           <td>{{ employee.email }}</td>
         </tr>
@@ -13,9 +16,9 @@
 
 <script>
 export default {
-  name: "employee-table",
+  name: 'employee-table',
   props: {
-    employees: Array
-  }
+    employees: Array,
+  },
 };
 </script>

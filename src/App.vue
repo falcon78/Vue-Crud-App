@@ -7,38 +7,38 @@
 </template>
 
 <script>
-import EmployeeTable from "./components/EmployeeTable";
-import EmployeeForm from "./components/EmployeeForm";
+import EmployeeTable from './components/EmployeeTable';
+import EmployeeForm from './components/EmployeeForm';
 export default {
-  name: "app",
+  name: 'app',
   components: {
     EmployeeTable,
-    EmployeeForm
+    EmployeeForm,
   },
   data() {
     return {
       employees: [
         {
           id: 0,
-          name: "User Name",
-          email: "user@user.com"
+          name: 'User Name',
+          email: 'user@user.com',
         },
         {
           id: 1,
-          name: "Admin User",
-          email: "admin@user.com"
-        }
-      ]
+          name: 'Admin User',
+          email: 'admin@user.com',
+        },
+      ],
     };
   },
   methods: {
     addEmployee(employee) {
+      console.log(employee);
       const id = this.employees.length > 0 ? this.employees.length : 0;
-      console.log(employee.name);
-      employee = { ...employee, id };
+      employee = {...employee, id};
       this.employees = [...this.employees, employee];
-    }
-  }
+    },
+  },
 };
 </script>
 
