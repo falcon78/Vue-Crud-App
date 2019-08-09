@@ -3,13 +3,16 @@
     <form @submit.prevent="handleSubmit">
       <label>Employee Name</label>
       <input
-        :class="{'error': isInvalidName && submitting}"
+        ref="first"
+        :class="{ error: isInvalidName && submitting }"
         v-model="employee.name"
         type="text"
+        @focus="clearStatus"
+        @keypress="clearStatus"
       />
       <label>Employee Email</label>
       <input
-        :class="{'error': isInvalidEmail && submitting }"
+        :class="{ error: emailError && submitting }"
         v-model="employee.email"
         type="text"
       />
@@ -36,44 +39,48 @@ export default {
         email: '',
       },
       emailRegex: new RegExp(
-          '^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$'
+        '^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$'
       ),
-    };
+    }
   },
   computed: {
     isInvalidName() {
-      return !this.employee.name;
+      return !this.employee.name
     },
     isInvalidEmail() {
-      return !this.emailRegex.test(this.employee.email);
+      return !this.emailRegex.test(this.employee.email)
     },
     success() {
-      return this.isInvalidName && this.isInvalidEmail;
+      return !this.isInvalidName && !this.isInvalidEmail
     },
   },
   methods: {
     handleSubmit() {
-      this.submitting = true;
-      this.clearStatus();
+      this.submitting = true
+      this.emailError = false
+      this.clearStatus()
       if (this.isInvalidName || this.isInvalidEmail) {
-        this.isInvalidName ? (this.nameError = true) : (this.emailError = true);
-        return false;
+        this.nameError = !!this.isInvalidName
+        this.emailError = !!this.isInvalidEmail
+        return false
       }
-      this.error = null;
-      this.submitting = false;
-      this.success = true;
-      this.added = true;
-      this.$emit('add:employee', this.employee);
+      this.$emit('add:employee', this.employee)
+      this.error = null
+      this.submitting = false
+      this.success = true
+      this.added = true
+      this.$refs.first.focus()
+      this.employee.name = this.employee.email = ''
     },
     clearStatus() {
-      ;(this.emailError = false), (this.nameError = false), (this.added = false);
+      this.emailError = false
+      this.added = false
     },
   },
-};
+}
 </script>
 
-
-<style>
+<style scoped>
 .danger {
   color: red;
   font-size: 1em;

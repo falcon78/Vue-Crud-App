@@ -2,7 +2,11 @@
   <div id="app" class="small-container">
     <h1>Employees</h1>
     <employee-form @add:employee="addEmployee" />
-    <employee-table :employees="employees" />
+    <employee-table
+      @delete:employee="deleteEmployee"
+      @edit:employee="editEmployee"
+      :employees="employees"
+    />
   </div>
 </template>
 
@@ -32,14 +36,21 @@ export default {
     };
   },
   methods: {
+    deleteEmployee(index) {
+      console.log(index);
+      this.employees = this.employees.filter(employee => {
+        return employee.id !== index;
+      });
+      console.log(this.employees);
+    },
     addEmployee(employee) {
-      console.log(employee);
       const id = this.employees.length > 0 ? this.employees.length : 0;
       employee = {...employee, id};
       this.employees = [...this.employees, employee];
     },
+    editEmployee(id, updatedEmployee) {
+      this.$set(this.employees, id, {id, ...updatedEmployee});
+    },
   },
 };
 </script>
-
-<style></style>
